@@ -13,7 +13,8 @@ import { s0obj, s0spawnArea } from './s0';
 import { s1obj, s1spawnArea } from './s1';
 import { s2obj, s2spawnArea } from './s2';
 
-nameInput.value = 'Operator';
+// nameInput.value = 'Operator';
+nameInput.focus();
 
 buttonConfirm.addEventListener('click', () => {
   let name = nameInput.value;
