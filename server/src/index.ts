@@ -25,6 +25,7 @@ interface IPlayer {
   live: boolean;
   x: number;
   y: number;
+  pts: number;
 }
 
 const players = new Map<string, IPlayer>();
@@ -46,6 +47,11 @@ let spawnAreaY = 0;
 let spawnAreaWidth = 0;
 let spawnAreaHeight = 0;
 
+let goalX = 0;
+let goalY = 0;
+let goalWidth = 0;
+let goalHeight = 0;
+
 let loopInterval = 100;
 
 const loop = () => {
@@ -53,23 +59,32 @@ const loop = () => {
     const playersArray = Array.from(players.values());
     _MainLoop: for (const player of playersArray) {
       if (player.live) {
-        continue;
-      }
-      let tx = spawnAreaX + spawnAreaWidth * Math.random();
-      let ty = spawnAreaY + spawnAreaHeight * Math.random();
-      for (const testingPlayer of playersArray) {
-        if (testingPlayer.live && dist(tx, ty, testingPlayer.x, testingPlayer.y) < 100) {
-          continue _MainLoop;
+        if (player.x > goalX && player.y > goalY && player.x < goalX + goalWidth && player.y < goalY + goalHeight) {
+          player.live = false;
+          player.pts++;
+          io.sockets.connected[player.id].emit('teleport', {
+            x: player.x,
+            y: player.y,
+            live: false,
+          });
+        } 
+      } else {
+        let tx = spawnAreaX + spawnAreaWidth * Math.random();
+        let ty = spawnAreaY + spawnAreaHeight * Math.random();
+        for (const testingPlayer of playersArray) {
+          if (testingPlayer.live && dist(tx, ty, testingPlayer.x, testingPlayer.y) < 100) {
+            continue _MainLoop;
+          }
         }
+        player.x = tx;
+        player.y = ty;
+        player.live = true;
+        io.sockets.connected[player.id].emit('teleport', {
+          x: tx,
+          y: ty,
+          live: true,
+        });
       }
-      player.x = tx;
-      player.y = ty;
-      player.live = true;
-      io.sockets.connected[player.id].emit('teleport', {
-        x: tx,
-        y: ty,
-        live: true,
-      });
     }
     boardcastPlayers();
   }
@@ -86,6 +101,7 @@ io.on('connection', socket => {
       live: false,
       x: 0,
       y: 0,
+      pts: 0,
     });
     boardcastPlayers();
     if (started) {
@@ -114,6 +130,10 @@ io.on('connection', socket => {
     spawnAreaY = spawnArea.y;
     spawnAreaWidth = spawnArea.width;
     spawnAreaHeight = spawnArea.height;
+    goalX = spawnArea.gx;
+    goalY = spawnArea.gy;
+    goalWidth = spawnArea.gwidth;
+    goalHeight = spawnArea.gheight;
   });
   socket.on('update', data => {
     const player = players.get(socket.id);
@@ -127,10 +147,6 @@ io.on('connection', socket => {
   socket.on('loopInterval', i => {
     loopInterval = i;
   });
-  // socket.emit('news', { hello: 'world' });
-  // socket.on('my other event', function (data) {
-  //   console.log(data);
-  // });
 });
 
 server.listen(80);

@@ -43,6 +43,7 @@ buttonConfirm.addEventListener('click', () => {
     live: boolean;
     x: number;
     y: number;
+    pts: number;
   }
 
   let players = new Map<string, IPlayer>();
@@ -250,6 +251,26 @@ buttonConfirm.addEventListener('click', () => {
         live = false;
       }
     }
+
+    {
+      const playersArray = Array.from(players.values()).sort(
+        (b, a) => a.pts - b.pts
+      );
+      ctx.fillStyle = `rgba(255, 255, 255, 0.5)`;
+      ctx.fillRect(10, 10, 200, 30 * playersArray.length);
+      let i = 30;
+      for (const player of playersArray) {
+        ctx.fillStyle = 'black';
+        ctx.font = `16px Arial`;
+        ctx.textAlign = 'left';
+        ctx.fillText(
+          `${player.name} (${player.pts})`,
+          20, i,
+        );
+        i += 30;
+      }
+
+    }
     requestAnimationFrame(render);
   }
 
@@ -265,8 +286,7 @@ buttonConfirm.addEventListener('click', () => {
   });
 
   const updatePlayersList = () => {
-    if (started) {
-    } else {
+    if (!started) {
       while (connectedPeersList.firstChild) {
         connectedPeersList.removeChild(connectedPeersList.firstChild);
       }
@@ -300,7 +320,7 @@ buttonConfirm.addEventListener('click', () => {
     socket.emit('join', { name });
   } else {
     const handle = (window as any).handle = {
-      start: () => (socket.emit('start'), handle.s2()),
+      start: () => (socket.emit('start'), handle.s0()),
       loop: (interval: number) => (socket.emit('loopInterval', interval), null),
       s0: () => {
         socket.emit('objects', s0obj)
@@ -315,7 +335,6 @@ buttonConfirm.addEventListener('click', () => {
         socket.emit('spawnArea', s2spawnArea)
       },
     };
-    handle.start();
   }
 });
 

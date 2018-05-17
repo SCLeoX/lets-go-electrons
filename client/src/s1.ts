@@ -3,6 +3,10 @@ export const s1spawnArea = {
   y: -400,
   width: 200,
   height: 1400,
+  gx: 400,
+  gy: -800,
+  gwidth: 600,
+  gheight: 2000,
 };
 
 export const s1obj = [
