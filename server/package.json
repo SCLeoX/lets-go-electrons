@@ -1,0 +1,19 @@
+{
+  "name": "let-us-go-electrons-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "watch": "node ./ensureDistDir.js && tsc --watch"
+  },
+  "author": "SCLeo",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {
+    "@types/node": "^10.1.0",
+    "@types/socket.io": "^1.4.33",
+    "socket.io": "^2.1.0"
+  }
+}

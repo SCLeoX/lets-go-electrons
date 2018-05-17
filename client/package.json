@@ -1,0 +1,20 @@
+{
+  "name": "let-us-go-electrons-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "watch": "node ./ensureDistDir.js && watchify src/index.ts -p tsify -o dist/bundle.js --debug"
+  },
+  "author": "SCLeo",
+  "license": "ISC",
+  "devDependencies": {
+    "tsify": "^4.0.0",
+    "typescript": "^2.7.2",
+    "watchify": "^3.11.0"
+  },
+  "dependencies": {
+    "@types/socket.io-client": "^1.4.32",
+    "socket.io-client": "^2.1.0"
+  }
+}

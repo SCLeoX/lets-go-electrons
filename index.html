@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Let's GO, electrons</title>
+  <style>
+    body {
+      overflow-x: hidden;
+    }
+    .parent {
+      position: relative;
+      height: 100%;
+    }
+    .child {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.5s;
+    }
+    #page1, #page2 {
+      transform: translate(50vw, -50%);
+    }
+    h1, h2 {
+      margin: 0;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    p {
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+    input {
+      outline: none;
+      border: none;
+      border-bottom: 3px solid black;
+      margin-top: 5px;
+      font-size: 32px;
+      padding: 5px;
+      width: 400px;
+    }
+    #button-confirm {
+      margin-top: 10px;
+      cursor: pointer;
+      width: 400px;
+      height: 60px;
+      border: 3px solid black;
+      box-sizing: border-box;
+      text-align: center;
+      line-height: 54px;
+      font-size: 32px;
+      transition: background-color 0.4s, color 0.2s;
+    }
+    #button-confirm:hover {
+      background-color: black;
+      color: white;
+      user-select: none;
+    }
+    li {
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+  <div class="parent">
+    <div class="child" id="page0">
+      <h1>Let's GO, electrons!</h1>
+      <h2>&lt;/&gt; by Leo with &hearts;</h2>
+      <p>Please enter your REAL name:</p>
+      <input id="name-input"/>
+      <div id="button-confirm" style>Confirm</div>
+    </div>
+    <div class="child" id="page1">
+      <h1>Connected peers:</h1>
+      <ul id="connected-peers-list">
+      </ul>
+    </div>
+    <div class="child" id="page2">
+      <canvas id="canvas"/>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
