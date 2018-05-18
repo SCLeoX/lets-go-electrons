@@ -2,7 +2,7 @@
 A mini game used in an electrochemistry presentation.
 
 # Warning
-This game may contain a security vulnerabilities (ACE on server/XSS). Use at your own risk. Also, please never run this game with people who really understand JavaScript. It is possible to control the entire game state from one client.
+This game may contain security vulnerabilities (ACE on server/XSS). Use at your own risk. Also, please never run this game with people who really understand JavaScript. It is possible to control the entire game state from one client.
 
 ![](https://image.ibb.co/moLMDy/2018_05_17_02_43_53.gif)
 
